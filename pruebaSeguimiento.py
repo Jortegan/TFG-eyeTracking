@@ -155,6 +155,7 @@ import cv2
 import dlib
 import numpy as np
 
+
 # Cargar el detector de caras y el predictor de puntos faciales
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
@@ -191,7 +192,7 @@ def map_to_window(pupil_position, eye_region, eye_box):
     return (scaled_x, scaled_y)
 
 # Inicializar la captura de video
-cap = cv2.VideoCapture("http://192.168.1.51:4747/video")
+cap = cv2.VideoCapture("http://172.20.10.7:4747/video")
 previous_position = None
 
 # Crear una ventana separada para dibujar el seguimiento de la mirada
