@@ -1,4 +1,4 @@
-#### Version 3.0 -- Seguimiento de la mirada -- Va bien -- Saca por pantalla donde se está mirando
+# ### Version 3.0 -- Seguimiento de la mirada -- Va bien -- Saca por pantalla donde se está mirando
 
 # import cv2
 # import dlib
@@ -26,7 +26,7 @@
 #         return None
 
 # # Inicializar la captura de video
-# cap = cv2.VideoCapture("http://192.168.1.51:4747/video")
+# cap = cv2.VideoCapture("http://172.20.10.7:4747/video")
 # previous_position = None
 
 # while True:
@@ -68,8 +68,8 @@
 
 
 
-#### Version 4.0 -- Seguimiento del ojo -- Pinta una nueva ventana donde se dibujan las lineas
-##### Funciona correctamente, pero no utiliza toda la pantalla, se queda solo en la esquina superior.
+# ## Version 4.0 -- Seguimiento del ojo -- Pinta una nueva ventana donde se dibujan las lineas
+# ### Funciona correctamente, pero no utiliza toda la pantalla, se queda solo en la esquina superior.
 
 # import cv2
 # import dlib
@@ -97,7 +97,7 @@
 #         return None
 
 # # Inicializar la captura de video
-# cap = cv2.VideoCapture("http://192.168.1.51:4747/video")
+# cap = cv2.VideoCapture("http://172.20.10.7:4747/video")
 # previous_position = None
 
 # # Crear una ventana separada para dibujar el seguimiento de la mirada
@@ -149,7 +149,112 @@
 
 
 
-#### Version 6.0 -- Mejora de muestreo de puntos -- Error -- No se muestran correctamente
+
+
+
+
+
+
+
+
+# import cv2
+# import dlib
+# import numpy as np
+
+# # Cargar el detector de caras y el predictor de puntos faciales
+# detector = dlib.get_frontal_face_detector()
+# predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+
+# # Función para obtener la región de interés del ojo
+# def get_eye_region(shape, eye_points):
+#     points = [(shape.part(point).x, shape.part(point).y) for point in eye_points]
+#     return points
+
+# # Función para detectar la posición de la pupila (simplificada)
+# def detect_pupil(eye_image):
+#     gray_eye = cv2.cvtColor(eye_image, cv2.COLOR_BGR2GRAY)
+#     _, threshold_eye = cv2.threshold(gray_eye, 30, 255, cv2.THRESH_BINARY_INV)
+#     moments = cv2.moments(threshold_eye, False)
+#     if moments['m00'] != 0:
+#         cx = int(moments['m10'] / moments['m00'])
+#         cy = int(moments['m01'] / moments['m00'])
+#         return (cx, cy)
+#     else:
+#         return None
+
+# # Inicializar la captura de video
+# cap = cv2.VideoCapture("http://172.20.10.7:4747/video")
+
+# # Crear una ventana separada para dibujar el seguimiento de la mirada
+# drawing_window = np.zeros((500, 500, 3), dtype=np.uint8)
+# window_center = (drawing_window.shape[1] // 2, drawing_window.shape[0] // 2)
+# previous_position = window_center
+
+# # Factor de escala para ampliar el movimiento
+# scale_factor = 20
+
+# while True:
+#     ret, frame = cap.read()
+#     if not ret:
+#         break
+    
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#     faces = detector(gray)
+
+#     for face in faces:
+#         landmarks = predictor(gray, face)
+
+#         left_eye_region = get_eye_region(landmarks, [36, 37, 38, 39, 40, 41])
+#         right_eye_region = get_eye_region(landmarks, [42, 43, 44, 45, 46, 47])
+        
+#         left_eye = frame[min([p[1] for p in left_eye_region]):max([p[1] for p in left_eye_region]), 
+#                          min([p[0] for p in left_eye_region]):max([p[0] for p in left_eye_region])]
+#         right_eye = frame[min([p[1] for p in right_eye_region]):max([p[1] for p in right_eye_region]), 
+#                           min([p[0] for p in right_eye_region]):max([p[0] for p in right_eye_region])]
+
+#         left_pupil = detect_pupil(left_eye)
+#         right_pupil = detect_pupil(right_eye)
+
+#         if left_pupil and right_pupil:
+#             avg_pupil_position = ((left_pupil[0] + right_pupil[0]) // 2, (left_pupil[1] + right_pupil[1]) // 2)
+            
+#             # Calcular el desplazamiento desde el centro del ojo
+#             eye_center = (left_eye.shape[1] // 2, left_eye.shape[0] // 2)
+#             displacement = (avg_pupil_position[0] - eye_center[0], avg_pupil_position[1] - eye_center[1])
+            
+#             # Aplicar el factor de escala y añadir al centro de la ventana
+#             drawing_point = (
+#                 int(window_center[0] + displacement[0] * scale_factor),
+#                 int(window_center[1] + displacement[1] * scale_factor)
+#             )
+            
+#             # Asegurar que el punto está dentro de los límites de la ventana
+#             drawing_point = (
+#                 max(0, min(drawing_point[0], drawing_window.shape[1] - 1)),
+#                 max(0, min(drawing_point[1], drawing_window.shape[0] - 1))
+#             )
+            
+#             cv2.line(drawing_window, previous_position, drawing_point, (0, 255, 0), 2)
+#             previous_position = drawing_point
+    
+#     cv2.imshow('Frame', frame)
+#     cv2.imshow('Gaze Tracking', drawing_window)
+    
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+
+# cap.release()
+# cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+### Version 6.0 -- Mejora de muestreo de puntos -- Error -- No se muestran correctamente
 
 import cv2
 import dlib
@@ -247,6 +352,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
-
-

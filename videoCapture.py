@@ -8,7 +8,7 @@
 # detector = dlib.get_frontal_face_detector()
 # predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
-# capture = cv2.VideoCapture("http://192.168.1.51:4747/video")
+# capture = cv2.VideoCapture("http://172.20.10.7:4747/video")
 
 # if not capture.isOpened():
 #     print("Error al abrir el video.")
@@ -108,6 +108,28 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### Version 1.0 --- Seguimiento del ojo -- ERROR -- Sigue al ojo, no la mirada
 
 # import cv2
@@ -118,7 +140,7 @@
 # predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 # # Inicializar la captura de video desde la cámara IP
-# capture = cv2.VideoCapture("http://192.168.1.51:4747/video")
+# capture = cv2.VideoCapture("http://172.20.10.7:4747/video")
 
 # # Listas para almacenar las posiciones de los ojos
 # left_eye_points = []
@@ -173,7 +195,29 @@
 # cv2.destroyAllWindows()
 
 
-#### Version 2.0 --- Seguimiento del ojo -- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# #### Version 2.0 --- Seguimiento del ojo -- 
 
 import cv2
 import dlib
@@ -184,7 +228,7 @@ detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 # Inicializar la captura de video desde la cámara IP
-cap = cv2.VideoCapture("http://192.168.1.51:4747/video")
+cap = cv2.VideoCapture("http://172.20.10.7:4747/video")
 
 # Función para calcular el centro de un conjunto de puntos
 def midpoint(p1, p2):
