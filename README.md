@@ -4,7 +4,7 @@ This project implements real-time eye-tracking and gaze visualization using comp
 
 This is the result of the TFG - Desarrollo de un sistema de eye tracking mediante técnicas de vision artificial developed in september 2024 by Jorge Ortega Nieto.
 
-I know that the repositoy is a bit of a mess, because you will find so many trys in the diferent files and many things that can be broken only by looking at them, but the important file is the OpenPupilTracker.py.
+I know that the repositoy is a bit of a mess, because you will find so many trys in the diferent files and many things that can be broken only by looking at them, but the important file is the **OpenPupilTracker.py**.
 
 ## Features
 
